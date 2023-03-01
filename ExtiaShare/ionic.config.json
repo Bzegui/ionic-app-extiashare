@@ -1,0 +1,7 @@
+{
+  "name": "ExtiaShare",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
