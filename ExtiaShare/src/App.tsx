@@ -12,7 +12,7 @@ import {
 import { IonReactRouter } from '@ionic/react-router';
 import { ellipse, square, triangle } from 'ionicons/icons';
 import NFCReadTab from './pages/NFC_reader/NFCRead';
-import Tab2 from './pages/Tab2';
+import Tab2 from './pages/Test_modale/TestModale';
 import Tab3 from './pages/Tab3';
 
 /* Core CSS required for Ionic components to work properly */
@@ -58,7 +58,7 @@ const App: React.FC = () => (
           </Route>
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
-          <IonTabButton tab="tab1" href="/tab1">
+          <IonTabButton tab="nfc-read" href="/nfc-read">
             <IonIcon aria-hidden="true" icon={triangle} />
             <IonLabel>NFC read</IonLabel>
           </IonTabButton>
