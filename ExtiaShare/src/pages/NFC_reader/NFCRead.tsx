@@ -26,11 +26,15 @@ import { useState } from 'react';
 
 // Utilities :
 
-import { ClearSelectOptionsList } from '../../utilities/NFCReaderUtility';
+//import { ClearSelectOptionsList } from '../../utilities/NFCReaderUtility';
 
 // NFC :
 
 import { NFC, Ndef, NfcTag } from '@awesome-cordova-plugins/nfc';
+
+// HTTP :
+
+import { HTTP } from '@awesome-cordova-plugins/http';
 
 // FC :
 
@@ -48,9 +52,9 @@ const NFCReadTab: React.FC = () => {
 
   // NFC tag subscriber implementation :
 
-  // NFC read feature :
+  // NFC send feature :
 
-  const NFCReader = async() => {
+  const NFCSender = async() => {
 
     // def NFC flags :
 
@@ -59,58 +63,62 @@ const NFCReadTab: React.FC = () => {
     // Reader V2 :
     
     const reader = NFC.readerMode(flags).subscribe(
-      
+   
       tag => {
-
-        // clear list at startup :
-
-        ClearSelectOptionsList();
-
-        // HTML elements :
 
         let idList: Array<number> = []; // ID list :
 
-        let itemOption; // item option html element
+        // handle undefined case :
 
-        let itemOptionLabel; // item option label html element
+        if (tag.isWritable !== undefined && tag.id !== undefined) {
 
-        // retrieve 'location' element by ID to create tag content inside it :
+          tag.id.forEach(id => {
 
-        const location: HTMLElement | null = document.getElementById('location');
+            idList.push(id);
+          }) // push id to array;       
+        } 
+        
+        // send NFC tag data by HTTP :
 
-          // handle undefined case :
+        const SendNFCData = async() => {
 
-          if (tag.isWritable !== undefined && tag.id !== undefined) {
+          //alert('in send data')
 
-            setIsWritable(tag.isWritable); // set tag status
+          // HTTP POST request to send sensor profiles from lorawan server/gateway : 
 
-            setTagType(tag.type); // set tag type
+          await HTTP.post('http://192.168.0.54:8080/', { idList }, 
+          
+          {headers: 'none'}).then(data => {
 
-            // HTML elements :
+            // If sensor already exists on lorawan server/gateway (GET request status === '200') :
 
-            itemOption = document.createElement('ion-item'); // item for tag id; 
+            // Provide profiles list with data from server :
 
-            itemOptionLabel = document.createElement('ion-item-label'); // item label for tag id; // Label
+            if (data.status === 200) {
 
-            tag.id.forEach(id => {
+              alert("request sent ok")
+            }
 
-              idList.push(id);
-            }) // push id to array;
+          }).catch(error => {
 
-            itemOptionLabel.textContent = "Tag ID";
+            // If sensor doesn't exists on lorawan server (GET request status === '404') :
+    
+            // If GET request status is other than '404' :
+    
+            // eslint-disable-next-line no-useless-concat
+            alert(error.status + " " + 'this is the error status');
+            alert(error.error); // error message as string
+            alert(error.headers);           
+          }); 
+        };
 
-            itemOption.textContent = `${idList.toString()}` + "," + " ";
+        // send NFC data call for testing :
 
-            // append elements :
-
-            location !== null? location.appendChild(itemOptionLabel) : Error("Unable to find DOM element #location");
-
-            location !== null? location.appendChild(itemOption) : Error("Unable to find DOM element #location");
-          }
+        SendNFCData();
       }
     )
   }
-  
+
   return (
 
     <IonPage>
@@ -154,7 +162,9 @@ const NFCReadTab: React.FC = () => {
 
       </IonContent>
 
-      <IonButton onClick={NFCReader} shape="round">NFC reader service start</IonButton>
+      {/*<IonButton onClick={NFCReader} shape="round">NFC reader service start</IonButton>*/}
+
+      <IonButton onClick={NFCSender} shape="round">send NFC tag infos</IonButton>
     </IonPage>
   );
 };
