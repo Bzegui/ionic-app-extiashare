@@ -47,7 +47,7 @@ const App: React.FC = () => (
           <Route exact path="/nfc-read">
             <NFCReadTab />
           </Route>
-          <Route exact path="/tab2">
+          <Route exact path="/test-modale">
             <Tab2 />
           </Route>
           <Route path="/tab3">
@@ -62,7 +62,7 @@ const App: React.FC = () => (
             <IonIcon aria-hidden="true" icon={triangle} />
             <IonLabel>NFC read</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab2" href="/tab2">
+          <IonTabButton tab="tab2" href="/test-modale">
             <IonIcon aria-hidden="true" icon={ellipse} />
             <IonLabel>Tab 2</IonLabel>
           </IonTabButton>
