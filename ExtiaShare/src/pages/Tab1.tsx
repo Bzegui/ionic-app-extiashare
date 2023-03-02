@@ -1,9 +1,27 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import './Tab1.css';
 
-const Tab1: React.FC = () => {
+// imports :
 
+import { NFC, Ndef } from '@awesome-cordova-plugins/nfc';
+
+const NFCTab: React.FC = () => {
+
+  // NFC Tags reader :
+
+  // NFC tag subscriber
+
+  const NFCReader = async() => {
+
+    const flags = NFC.FLAG_READER_NFC_A | NFC.FLAG_READER_NFC_B;
+
+    const reader = NFC.readerMode(flags).subscribe(
+      
+      tag => alert(JSON.stringify(tag))
+    )  
+  }
+  
   return (
 
     <IonPage>
@@ -18,11 +36,11 @@ const Tab1: React.FC = () => {
             <IonTitle size="large">NFC tab</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <ExploreContainer name="Tab 1 page" />
+
+        <IonButton onClick={NFCReader}>NFC start</IonButton>
       </IonContent>
     </IonPage>
-
   );
 };
 
-export default Tab1;
+export default NFCTab;
