@@ -9,9 +9,10 @@ import {
   IonTabs,
   setupIonicReact
 } from '@ionic/react';
+
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, square, triangle } from 'ionicons/icons';
-import NFCReadTab from './pages/NFC_reader/NFCRead';
+import { keyOutline } from 'ionicons/icons';
+import AuthTab from './pages/Authentication/Authentication';
 import Tab2 from './pages/Test_modale/TestModale';
 import Tab3 from './pages/Tab3';
 
@@ -44,31 +45,20 @@ const App: React.FC = () => (
 
           {/* to NFC read */}
 
-          <Route exact path="/nfc-read">
-            <NFCReadTab />
+          <Route exact path="/auth-tab">
+            <AuthTab />
           </Route>
           <Route exact path="/test-modale">
             <Tab2 />
           </Route>
-          <Route path="/tab3">
-            <Tab3 />
-          </Route>
           <Route exact path="/">
-            <Redirect to="/nfc-read" />
+            <Redirect to="/auth-tab" />
           </Route>
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
-          <IonTabButton tab="nfc-read" href="/nfc-read">
-            <IonIcon aria-hidden="true" icon={triangle} />
-            <IonLabel>NFC read</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="tab2" href="/test-modale">
-            <IonIcon aria-hidden="true" icon={ellipse} />
-            <IonLabel>Tab 2</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="tab3" href="/tab3">
-            <IonIcon aria-hidden="true" icon={square} />
-            <IonLabel>Tab 3</IonLabel>
+          <IonTabButton tab="auth-tab" href="/auth-tab">
+            <IonIcon aria-hidden="true" icon={keyOutline} />
+            <IonLabel>Authentification</IonLabel>
           </IonTabButton>
         </IonTabBar>
       </IonTabs>

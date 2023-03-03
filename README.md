@@ -10,7 +10,7 @@
 
     - NFC : npm i phonegap-nfc;
     - Native-HTTP : 
-        - npm install @awesome-cordova-plugins/approov-advanced-http;
+        - npm i @awesome-cordova-plugins/http;
         - npx cap sync;
 
 ### cordova - phonegap plugins - docs/repos :
