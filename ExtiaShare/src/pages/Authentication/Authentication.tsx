@@ -27,19 +27,17 @@ import { useState } from 'react';
 
 // Utilities :
 
-//import { ClearSelectOptionsList } from '../../utilities/NFCReaderUtility';
-
-import { NFCSender } from '../../utilities/NFCReaderUtility';
+import { NFCLogSender } from '../../utilities/NFC/NFCReaderUtility';
 
 // FC :
 
-const NFCReadTab: React.FC = () => {
+const AuthTab: React.FC = () => {
 
   // ion lifecycle to activate NFC service at page loading
 
   useIonViewWillEnter(() => {
 
-    NFCSender(); // load NFC reader/sender service before page loading => bypass native NFC service.
+    NFCLogSender();
   });
 
   /*-----------------------------------------------------------------------------------------*/
@@ -48,45 +46,40 @@ const NFCReadTab: React.FC = () => {
 
   // NFC tag subscriber implementation :
 
+  // test for modale :
+
+  //if (isAuthenticated == true) { alert("user is authenticated") }
+
   return (
 
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Page d'authentification</IonTitle>
+          <IonTitle>Authentification</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen className='ion-margin-top'>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Authentification</IonTitle>
-          </IonToolbar>
-        </IonHeader>
 
         {/* display tag retrieved elements */}
 
         <IonCard>
           <IonCardHeader>
             <IonCardTitle>Scan de votre carte</IonCardTitle>
-            <IonCardSubtitle>Scannez votre carte compatible NFC pour vous authentifier</IonCardSubtitle>
+            <IonCardSubtitle>Scannez votre carte compatible NFC pour vous authentifier.</IonCardSubtitle>
           </IonCardHeader>
           
           <IonCardContent>
             <IonList>
-              <IonItem>
-                <IonLabel>Tag type</IonLabel>
-              </IonItem>
+              
             </IonList>
           </IonCardContent>
         </IonCard>
 
       </IonContent>
 
-      {/*<IonButton onClick={NFCReader} shape="round">NFC reader service start</IonButton>*/}
-
       {/*<IonButton onClick={NFCSender} shape="round">send NFC tag infos</IonButton>*/}
     </IonPage>
   );
 };
 
-export default NFCReadTab;
+export default AuthTab;
